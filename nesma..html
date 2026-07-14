@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الشخصية</title>
+    <!-- استدعاء خط عربي أنيق -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            /* خلفية بيضاء نقية */
+            background-color: #ffffff;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* تأثيرات القلوب البنفسجية المتحركة في الخلفية */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            animation: floatUp 12s infinite ease-in;
+            opacity: 0;
+        }
+
+        /* رسم قلب بالـ SVG بلون بنفسجي شفاف */
+        .heart svg {
+            fill: rgba(142, 68, 173, 0.12);
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-1200px) rotate(360deg) scale(1.4); opacity: 0; }
+        }
+
+        /* توزيع القلوب العشوائية وأحجامها */
+        .heart:nth-child(1) { left: 10%; width: 50px; height: 50px; animation-duration: 9s; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 25%; width: 35px; height: 35px; animation-duration: 13s; animation-delay: 2s; }
+        .heart:nth-child(3) { left: 45%; width: 70px; height: 70px; animation-duration: 11s; animation-delay: 5s; }
+        .heart:nth-child(4) { left: 65%; width: 45px; height: 45px; animation-duration: 15s; animation-delay: 1s; }
+        .heart:nth-child(5) { left: 85%; width: 60px; height: 60px; animation-duration: 10s; animation-delay: 3s; }
+
+        /* قلب كبير ثابت في السنتر وراء المحتوى بشكل فخم وجميل */
+        .main-bg-heart {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            height: 350px;
+            z-index: 0;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        .main-bg-heart svg {
+            fill: #8e44ad;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            /* تصميم الصندوق الأبيض مع حدود بنفسجية ناعمة */
+            background: #ffffff;
+            border: 2px solid #e1bee7;
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 15px 35px rgba(106, 27, 154, 0.08);
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            z-index: 10;
+            margin: auto;
+        }
+
+        h2 {
+            color: #8e44ad;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .question {
+            text-align: right;
+            margin-bottom: 20px;
+            background: #faf5ff;
+            padding: 15px;
+            border-radius: 12px;
+            border-right: 5px solid #9b59b6;
+            transition: transform 0.3s;
+        }
+
+        .question:hover {
+            transform: translateX(-5px);
+        }
+
+        .question p {
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: #4a235a;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #555;
+            transition: color 0.3s;
+        }
+
+        .options label:hover {
+            color: #8e44ad;
+        }
+
+        /* تنسيق الأزرار باللون البنفسجي */
+        button {
+            background: linear-gradient(45deg, #8e44ad, #af7ac5);
+            color: #ffffff;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(142, 68, 173, 0.5);
+        }
+
+        /* تنسيق الرسالة النهائية */
+        .final-message {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #333;
+            animation: zoomIn 1s ease-out;
+            text-align: right;
+        }
+
+        .final-message span.highlight {
+            color: #8e44ad;
+            font-weight: bold;
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .final-message span.ending {
+            color: #d10056;
+            font-weight: bold;
+            font-size: 1.3rem;
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+        }
+
+        @keyframes zoomIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.08); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        #surprise-btn {
+            animation: heartbeat 2s infinite;
+            font-size: 1.5rem;
+            padding: 15px 45px;
+        }
+
+        #next-step-section {
+            border: none;
+            box-shadow: none;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- القلوب المتحركة والثابتة بالخلفية -->
+    <div class="main-bg-heart">
+        <svg viewBox="0 0 32 32"><path d="M16 28.5L4.3 16.8C1.4 13.9 1.4 9.1 4.3 6.2c2.9-2.9 7.6-2.9 10.5 0L16 7.4l1.2-1.2c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5L16 28.5z"/></svg>
+    </div>
+
+    <div class="bg-hearts">
+        <div class="heart"><svg viewBox="0 0 32 32"><path d="M16 28.5L4.3 16.8C1.4 13.9 1.4 9.1 4.3 6.2c2.9-2.9 7.6-2.9 10.5 0L16 7.4l1.2-1.2c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5L16 28.5z"/></svg></div>
+        <div class="heart"><svg viewBox="0 0 32 32"><path d="M16 28.5L4.3 16.8C1.4 13.9 1.4 9.1 4.3 6.2c2.9-2.9 7.6-2.9 10.5 0L16 7.4l1.2-1.2c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5L16 28.5z"/></svg></div>
+        <div class="heart"><svg viewBox="0 0 32 32"><path d="M16 28.5L4.3 16.8C1.4 13.9 1.4 9.1 4.3 6.2c2.9-2.9 7.6-2.9 10.5 0L16 7.4l1.2-1.2c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5L16 28.5z"/></svg></div>
+        <div class="heart"><svg viewBox="0 0 32 32"><path d="M16 28.5L4.3 16.8C1.4 13.9 1.4 9.1 4.3 6.2c2.9-2.9 7.6-2.9 10.5 0L16 7.4l1.2-1.2c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5L16 28.5z"/></svg></div>
+        <div class="heart"><svg viewBox="0 0 32 32"><path d="M16 28.5L4.3 16.8C1.4 13.9 1.4 9.1 4.3 6.2c2.9-2.9 7.6-2.9 10.5 0L16 7.4l1.2-1.2c2.9-2.9 7.6-2.9 10.5 0 2.9 2.9 2.9 7.6 0 10.5L16 28.5z"/></svg></div>
+    </div>
+
+    <!-- عنصر الصوت المخفي لتشغيل الأغنية -->
+    <audio id="bg-audio" src="song.mp3" preload="auto"></audio>
+
+    <!-- القسم الأول: الاختبار -->
+    <div id="quiz-section" class="container">
+        <h2>اختبار الصداقة 💜</h2>
+        
+        <div class="question">
+            <p>1. ما هو أكثر شيء يلفت انتباهك في البداية؟</p>
+            <div class="options">
+                <label><input type="radio" name="q1"> الابتسامة</label>
+                <label><input type="radio" name="q1"> طريقة الكلام</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. كيف تتصرفين عند الزعل؟</p>
+            <div class="options">
+                <label><input type="radio" name="q2"> الصمت المتقطع</label>
+                <label><input type="radio" name="q2"> العتاب المباشر</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. أيهما تفضلين في الأوقات الهادئة؟</p>
+            <div class="options">
+                <label><input type="radio" name="q3"> سماع الموسيقى</label>
+                <label><input type="radio" name="q3"> مشاهدة فيلم</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. ما هي قهوتك أو مشروبك المفضل؟</p>
+            <div class="options">
+                <label><input type="radio" name="q4"> قهوة سادة / دارك</label>
+                <label><input type="radio" name="q4"> عصائر فريش</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. هل تسامحين بسهولة إذا كان الشخص غالي عليكي؟</p>
+            <div class="options">
+                <label><input type="radio" name="q5"> أكيد، لو عرف غلطه</label>
+                <label><input type="radio" name="q5"> بحتاج وقت شوية</label>
+            </div>
+        </div>
+
+        <button id="finish-btn">إنهاء الاختبار</button>
+    </div>
+
+    <!-- القسم الثاني: زر اضغطي هنا (بدون أي كلام آخر) -->
+    <div id="next-step-section" class="container hidden">
+        <button id="surprise-btn">اضغطي هنا ينسوم</button>
+    </div>
+
+    <!-- القسم الثالث: الرسالة -->
+    <div id="message-section" class="container hidden">
+        <div class="final-message">
+            <span class="highlight">ما تيجي يصحبي نتصالح ونرجع تاني زي زمان 🥺💜</span>
+            حبيبتي ينسوم انتي يعني من اول مره كدا هنزعل من بعض جامد دا اول اختبار في صداقتنا نمسك ل بعض علي الوحده مش كدا واكيد اتعاملتي معايا واتكلمنا عارفه طبعي وعارفه وبقولك كتير غيرهم وحتي امبارح خلتيني زيهم بردو ونا مستثنيكي علي الكثير.
+            <span class="ending">ربنا يفرح قلبك ويسعدك يقزعه 😂❤</span>
+        </div>
+    </div>
+
+    <script>
+        const quizSection = document.getElementById('quiz-section');
+        const nextStepSection = document.getElementById('next-step-section');
+        const messageSection = document.getElementById('message-section');
+        
+        const finishBtn = document.getElementById('finish-btn');
+        const surpriseBtn = document.getElementById('surprise-btn');
+        const bgAudio = document.getElementById('bg-audio');
+
+        finishBtn.addEventListener('click', function() {
+            quizSection.classList.add('hidden'); 
+            
+            setTimeout(() => {
+                quizSection.style.display = 'none';
+                nextStepSection.classList.remove('hidden'); 
+                window.scrollTo(0, 0); 
+            }, 300);
+        });
+
+        surpriseBtn.addEventListener('click', function() {
+            // تشغيل الأغنية بمجرد الضغط على زر "اضغطي هنا ينسوم"
+            bgAudio.play().catch(function(error) {
+                console.log("حماية المتصفح منعت التشغيل التلقائي حتى يحدث تفاعل حقيقي:", error);
+            });
+
+            nextStepSection.classList.add('hidden'); 
+            
+            setTimeout(() => {
+                nextStepSection.style.display = 'none';
+                messageSection.classList.remove('hidden'); 
+                window.scrollTo(0, 0); 
+            }, 300);
+        });
+    </script>
+</body>
+</html>
